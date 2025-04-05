@@ -1,0 +1,17 @@
+{
+  "platforms": [
+    "apple",
+    "android",
+    "web"
+  ],
+  "apple": {
+    "modules": [
+      "PDFToolkitModule"
+    ]
+  },
+  "android": {
+    "modules": [
+      "expo.modules.pdftoolkit.PDFToolkitModule"
+    ]
+  }
+}
