@@ -1,8 +1,14 @@
 package expo.modules.pdftoolkit
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.pdf.PdfRenderer
+import android.os.ParcelFileDescriptor
+import expo.modules.kotlin.Promise
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
-import java.net.URL
+import java.io.File
+import java.io.FileOutputStream
 
 class PDFToolkitModule : Module() {
   // Each module class must implement the definition function. The definition consists of components
@@ -14,37 +20,59 @@ class PDFToolkitModule : Module() {
     // The module will be accessible from `requireNativeModule('PDFToolkit')` in JavaScript.
     Name("PDFToolkit")
 
-    // Sets constant properties on the module. Can take a dictionary or a closure that returns a dictionary.
-    Constants(
-      "PI" to Math.PI
-    )
+    // PDF를 이미지로 변환하는 메소드
+    AsyncFunction("convertToImages") { pdfPath: String, promise: Promise ->
+      try {
+        // file:// prefix 제거
+        val realPath = pdfPath.removePrefix("file://")
+        val file = File(realPath)
+        val fileDescriptor = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
+        val pdfRenderer = PdfRenderer(fileDescriptor)
 
-    // Defines event names that the module can send to JavaScript.
-    Events("onChange")
+        val imagePaths = mutableListOf<String>()
+        val cacheDir = appContext.reactContext?.cacheDir ?: File("/tmp")
 
-    // Defines a JavaScript synchronous function that runs the native code on the JavaScript thread.
-    Function("hello") {
-      "Hello world! 👋"
-    }
+        // PDF 파일명 추출 (확장자 제외)
+        val pdfNameWithoutExt = file.nameWithoutExtension
 
-    // Defines a JavaScript function that always returns a Promise and whose native code
-    // is by default dispatched on the different thread than the JavaScript runtime runs on.
-    AsyncFunction("setValueAsync") { value: String ->
-      // Send an event to JavaScript.
-      sendEvent("onChange", mapOf(
-        "value" to value
-      ))
-    }
+        for (pageIndex in 0 until pdfRenderer.pageCount) {
+          val page = pdfRenderer.openPage(pageIndex)
+          val width = page.width
+          val height = page.height
+          val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+          page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
+          page.close()
 
-    // Enables the module to be used as a native view. Definition components that are accepted as part of
-    // the view definition: Prop, Events.
-    View(PDFToolkitView::class) {
-      // Defines a setter for the `url` prop.
-      Prop("url") { view: PDFToolkitView, url: URL ->
-        view.webView.loadUrl(url.toString())
+          // 파일명 생성 및 저장
+          val timestamp = System.currentTimeMillis()
+          val fileName = "${pdfNameWithoutExt}_${timestamp}_page_$pageIndex.jpg"
+          val imageFile = File(cacheDir, fileName)
+          val fos = FileOutputStream(imageFile)
+          bitmap.compress(Bitmap.CompressFormat.JPEG, 70, fos)
+          fos.flush()
+          fos.close()
+          bitmap.recycle()  // 메모리 해제
+          imagePaths.add("file://${imageFile.absolutePath}")
+        }
+
+        pdfRenderer.close()
+        fileDescriptor.close()
+
+        promise.resolve(imagePaths)
+      } catch (e: Exception) {
+        promise.reject("PDF_ERROR", "PDF 변환 실패: ${e.message}")
       }
-      // Defines an event that the view can send to JavaScript.
-      Events("onLoad")
+    }
+
+    // 파일 이름을 가져오는 메소드
+    AsyncFunction("getFileName") { pdfPath: String, promise: Promise ->
+      try {
+        val realPath = pdfPath.removePrefix("file://")
+        val file = File(realPath)
+        promise.resolve(file.name)
+      } catch (e: Exception) {
+        promise.reject("FILE_NAME_ERROR", "파일 이름 가져오기 실패: ${e.message}")
+      }
     }
   }
 }

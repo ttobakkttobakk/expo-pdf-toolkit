@@ -1,38 +1,58 @@
-import { useEvent } from 'expo';
-import PDFToolkit, { PDFToolkitView } from 'react-native-pdf-toolkit';
-import { Button, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { useEvent } from "expo";
+import * as DocumentPicker from "expo-document-picker";
+import { useState } from "react";
+import { Button, SafeAreaView, ScrollView, Text, View } from "react-native";
+import PDFToolkit from "react-native-pdf-toolkit";
 
 export default function App() {
-  const onChangePayload = useEvent(PDFToolkit, 'onChange');
+  // const onChangePayload = useEvent(PDFToolkit, "onChange");
+  const [fileLabel, setFileLabel] = useState<string>("");
+  const [tempFileUri, setTempFileUri] = useState<string>("");
+
+  const handleDocumentPicker = async () => {
+    const result = await DocumentPicker.getDocumentAsync({
+      type: "application/pdf",
+      copyToCacheDirectory: true,
+    });
+
+    if (result.canceled) return;
+
+    const { uri, name } = result.assets[0];
+
+    setFileLabel(name);
+    setTempFileUri(uri);
+
+    console.log(PDFToolkit.convertToImages);
+
+    const realPath = uri.replace("file://", "");
+    const images = await PDFToolkit.convertToImages(realPath);
+
+    console.log(images);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <Text style={styles.header}>Module API Example</Text>
-        <Group name="Constants">
+        {/* <Group name="Constants">
           <Text>{PDFToolkit.PI}</Text>
         </Group>
         <Group name="Functions">
           <Text>{PDFToolkit.hello()}</Text>
-        </Group>
+        </Group> */}
         <Group name="Async functions">
-          <Button
-            title="Set value"
-            onPress={async () => {
-              await PDFToolkit.setValueAsync('Hello from JS!');
-            }}
-          />
+          <Button title="PDF 업로드" onPress={handleDocumentPicker} />
         </Group>
         <Group name="Events">
-          <Text>{onChangePayload?.value}</Text>
+          <Text>{fileLabel}</Text>
         </Group>
-        <Group name="Views">
+        {/* <Group name="Views">
           <PDFToolkitView
             url="https://www.example.com"
             onLoad={({ nativeEvent: { url } }) => console.log(`Loaded: ${url}`)}
             style={styles.view}
           />
-        </Group>
+        </Group> */}
       </ScrollView>
     </SafeAreaView>
   );
@@ -58,13 +78,13 @@ const styles = {
   },
   group: {
     margin: 20,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
     padding: 20,
   },
   container: {
     flex: 1,
-    backgroundColor: '#eee',
+    backgroundColor: "#eee",
   },
   view: {
     flex: 1,

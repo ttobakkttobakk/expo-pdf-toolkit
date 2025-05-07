@@ -1,12 +1,12 @@
-import { NativeModule, requireNativeModule } from 'expo';
+import { NativeModule, requireNativeModule } from "expo";
 
-import { PDFToolkitModuleEvents } from './PDFToolkit.types';
+import { PDFToolkitModuleEvents } from "./PDFToolkit.types";
 
 declare class PDFToolkitModule extends NativeModule<PDFToolkitModuleEvents> {
-  PI: number;
-  hello(): string;
-  setValueAsync(value: string): Promise<void>;
+  convertToImages(pdfPath: string): Promise<string[]>;
+  getFileName(pdfPath: string): Promise<string>;
+  getPageThumbnail(pdfPath: string, pageNumber: number): Promise<string>;
 }
 
 // This call loads the native module object from the JSI.
-export default requireNativeModule<PDFToolkitModule>('PDFToolkit');
+export default requireNativeModule<PDFToolkitModule>("PDFToolkit");
