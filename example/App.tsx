@@ -1,4 +1,5 @@
 import * as DocumentPicker from "expo-document-picker";
+import { PDFToolkit } from "expo-pdf-toolkit";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -8,7 +9,6 @@ import {
   View,
   Alert,
 } from "react-native";
-import PDFToolkit from "expo-pdf-toolkit";
 
 export default function App() {
   const [fileLabel, setFileLabel] = useState<string>("");

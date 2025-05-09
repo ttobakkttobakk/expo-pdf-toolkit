@@ -25,6 +25,17 @@ export interface PDFConversionOptions {
  */
 export interface PDFToolkitModuleType {
     /**
+     * 이벤트 리스너 추가
+     * @param eventName 이벤트 이름
+     * @param listener 콜백 함수
+     */
+    addListener(eventName: string, listener: (...args: any[]) => void): void;
+    /**
+     * 모든 이벤트 리스너 제거
+     * @param eventName 이벤트 이름
+     */
+    removeAllListeners(eventName: string): void;
+    /**
      * PDF 파일의 모든 페이지를 이미지로 변환
      * @param pdfPath PDF 파일 경로
      * @param options 변환 옵션
