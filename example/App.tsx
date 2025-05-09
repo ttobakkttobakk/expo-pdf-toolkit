@@ -8,7 +8,7 @@ import {
   View,
   Alert,
 } from "react-native";
-import PDFToolkit from "react-native-pdf-toolkit";
+import PDFToolkit from "expo-pdf-toolkit";
 
 export default function App() {
   const [fileLabel, setFileLabel] = useState<string>("");

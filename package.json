@@ -1,5 +1,5 @@
 {
-  "name": "react-native-pdf-toolkit",
+  "name": "expo-pdf-toolkit",
   "version": "0.1.0",
   "description": "React Native PDF toolkit for iOS and Android",
   "main": "build/index.js",
@@ -18,16 +18,16 @@
   "keywords": [
     "react-native",
     "expo",
-    "react-native-pdf-toolkit",
+    "expo-pdf-toolkit",
     "PDFToolkit"
   ],
-  "repository": "https://github.com/ttobakkttobakk/react-native-pdf-toolkit",
+  "repository": "https://github.com/ttobakkttobakk/expo-pdf-toolkit",
   "bugs": {
-    "url": "https://github.com/ttobakkttobakk/react-native-pdf-toolkit/issues"
+    "url": "https://github.com/ttobakkttobakk/expo-pdf-toolkit/issues"
   },
   "author": "ttobakkttobakk <uoon.dev@gmail.com> (ttobakkttobakk)",
   "license": "MIT",
-  "homepage": "https://github.com/ttobakkttobakk/react-native-pdf-toolkit#readme",
+  "homepage": "https://github.com/ttobakkttobakk/expo-pdf-toolkit#readme",
   "dependencies": {},
   "devDependencies": {
     "@types/react": "~18.3.12",

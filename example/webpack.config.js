@@ -6,7 +6,7 @@ module.exports = async (env, argv) => {
     {
       ...env,
       babel: {
-        dangerouslyAddModulePathsToTranspile: ['react-native-pdf-toolkit'],
+        dangerouslyAddModulePathsToTranspile: ['expo-pdf-toolkit'],
       },
     },
     argv

@@ -19,7 +19,7 @@ config.resolver.nodeModulesPaths = [
 ];
 
 config.resolver.extraNodeModules = {
-  'react-native-pdf-toolkit': '..',
+  'expo-pdf-toolkit': '..',
 };
 
 config.watchFolders = [path.resolve(__dirname, '..')];

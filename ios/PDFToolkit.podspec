@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   s.swift_version  = '5.4'
 
   # 소스 코드 위치 설정
-  s.source         = { git: 'https://github.com/ttobakkttobakk/react-native-pdf-toolkit' }
+  s.source         = { git: 'https://github.com/ttobakkttobakk/expo-pdf-toolkit' }
 
   # 정적 프레임워크 사용 설정
   s.static_framework = true

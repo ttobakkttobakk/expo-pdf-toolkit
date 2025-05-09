@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-pdf-toolkit-example",
-    "slug": "react-native-pdf-toolkit-example",
+    "name": "expo-pdf-toolkit-example",
+    "slug": "expo-pdf-toolkit-example",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

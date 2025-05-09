@@ -3,8 +3,8 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "react-native-pdf-toolkit": ["../src/index"],
-      "react-native-pdf-toolkit/*": ["../src/*"]
+      "expo-pdf-toolkit": ["../src/index"],
+      "expo-pdf-toolkit/*": ["../src/*"]
     }
   }
 }
