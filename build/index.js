@@ -1,18 +1,30 @@
-import PDFToolkitDefault from "./PDFToolkitModule";
-// Export all types
-export * from "./PDFToolkit.types";
-/**
- * PDF Toolkit 모듈 - IDE 자동완성 용도로 명시적 타입 정의
- * @example
- * // 사용 예시
- * import { PDFToolkit } from 'expo-pdf-toolkit';
- * PDFToolkit.convertToImages('file://path/to/pdf', { scale: 1.0 });
- * PDFToolkit.getPageThumbnail('file://path/to/pdf', 0, { scale: 0.5 });
- * PDFToolkit.addListener('onProgress', ({ progress, page, total }) => {
- *   console.log(`진행률: ${progress * 100}%, 페이지: ${page}/${total}`);
- * });
- */
-export const PDFToolkit = PDFToolkitDefault;
-// Keep default export for backward compatibility
-export default PDFToolkitDefault;
+"use strict";
+// Reexport the native module. On web, it will be resolved to PDFToolkitModule.web.ts
+// and on native platforms to PDFToolkitModule.ts
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PDFToolkit = void 0;
+const PDFToolkitModule_1 = __importDefault(require("./PDFToolkitModule"));
+// Export the native module as PDFToolkit for named import
+exports.PDFToolkit = PDFToolkitModule_1.default;
+// 2. 기존 default export - 이전 코드 호환성 유지
+exports.default = PDFToolkitModule_1.default;
+// 3. type exports
+__exportStar(require("./PDFToolkit.types"), exports);
 //# sourceMappingURL=index.js.map

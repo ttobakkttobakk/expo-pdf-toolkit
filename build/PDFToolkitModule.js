@@ -1,4 +1,6 @@
-import { requireNativeModule } from "expo";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const expo_1 = require("expo");
 // This call loads the native module object from the JSI.
-export default requireNativeModule("PDFToolkit");
+exports.default = (0, expo_1.requireNativeModule)("PDFToolkit");
 //# sourceMappingURL=PDFToolkitModule.js.map
