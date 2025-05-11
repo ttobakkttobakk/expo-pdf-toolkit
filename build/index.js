@@ -1,6 +1,9 @@
 "use strict";
-// Reexport the native module. On web, it will be resolved to PDFToolkitModule.web.ts
-// and on native platforms to PDFToolkitModule.ts
+/**
+ * PDF 도구 모듈
+ * 네이티브 플랫폼에서는 PDFToolkitModule.ts로 연결되고
+ * 웹에서는 PDFToolkitModule.web.ts로 연결됩니다.
+ */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -21,10 +24,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PDFToolkit = void 0;
 const PDFToolkitModule_1 = __importDefault(require("./PDFToolkitModule"));
-// Export the native module as PDFToolkit for named import
-exports.PDFToolkit = PDFToolkitModule_1.default;
-// 2. 기존 default export - 이전 코드 호환성 유지
-exports.default = PDFToolkitModule_1.default;
-// 3. type exports
 __exportStar(require("./PDFToolkit.types"), exports);
+/**
+ * PDF Toolkit 모듈
+ * PDF 파일 관련 기능 제공
+ * @example
+ * import { PDFToolkit } from 'expo-pdf-toolkit';
+ * // 여러 페이지 이미지로 변환
+ * const images = await PDFToolkit.convertToImages(pdfPath, { scale: 1.0 });
+ * // 특정 페이지 썸네일 얻기
+ * const thumbnail = await PDFToolkit.getPageThumbnail(pdfPath, 0, { scale: 0.5 });
+ */
+exports.PDFToolkit = PDFToolkitModule_1.default;
+// 기존 방식 호환을 위한 default export
+exports.default = PDFToolkitModule_1.default;
 //# sourceMappingURL=index.js.map

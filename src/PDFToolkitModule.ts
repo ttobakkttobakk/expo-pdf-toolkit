@@ -1,22 +1,6 @@
-import { NativeModule, requireNativeModule } from "expo";
+import { requireNativeModule } from "expo-modules-core";
 
-import {
-  PDFToolkitModuleEvents,
-  PDFConversionOptions,
-} from "./PDFToolkit.types";
+import { PDFToolkitModuleType } from "./PDFToolkit.types";
 
-declare class PDFToolkitModule extends NativeModule<PDFToolkitModuleEvents> {
-  convertToImages(
-    pdfPath: string,
-    options: PDFConversionOptions
-  ): Promise<string[]>;
-  getPageThumbnail(
-    pdfPath: string,
-    pageNumber: number,
-    options: PDFConversionOptions
-  ): Promise<string>;
-  getFileName(pdfPath: string): Promise<string>;
-}
-
-// This call loads the native module object from the JSI.
-export default requireNativeModule<PDFToolkitModule>("PDFToolkit");
+// 이 호출은 JSI에서 네이티브 모듈 객체를 로드합니다.
+export default requireNativeModule<PDFToolkitModuleType>("PDFToolkit");

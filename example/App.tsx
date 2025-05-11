@@ -30,50 +30,6 @@ export default function App() {
     };
   }, []);
 
-  // 안전한 PDF 로딩 함수
-  const loadPdf = async (
-    uri: string,
-    pageNumber: number = 0
-  ): Promise<string> => {
-    console.log(`[loadPdf] uri: ${uri}, pageNumber: ${pageNumber} 시작`);
-
-    return new Promise((resolve, reject) => {
-      console.log("[loadPdf] Promise 생성됨");
-
-      try {
-        console.log("[loadPdf] PDFToolkit.getPageThumbnail 호출 직전");
-
-        // 타임아웃 설정
-        const timeoutId = setTimeout(() => {
-          console.log("[loadPdf] 타임아웃 발생 (10초)");
-          reject(new Error("PDF 로딩 타임아웃 (10초)"));
-        }, 10000);
-
-        PDFToolkit.getPageThumbnail(uri, pageNumber, {
-          scale: 1.0,
-          compressionQuality: 0.7,
-        })
-          .then((result) => {
-            console.log(`[loadPdf] 성공: ${result}`);
-            clearTimeout(timeoutId);
-            resolve(result);
-          })
-          .catch((error) => {
-            console.log(`[loadPdf] 오류: ${error}`);
-            clearTimeout(timeoutId);
-            reject(error);
-          });
-
-        console.log(
-          "[loadPdf] PDFToolkit.getPageThumbnail 호출 직후 (비동기 실행 중)"
-        );
-      } catch (error) {
-        console.log(`[loadPdf] 예외 발생: ${error}`);
-        reject(error);
-      }
-    });
-  };
-
   const handleDocumentPicker = async () => {
     try {
       setIsLoading(true);

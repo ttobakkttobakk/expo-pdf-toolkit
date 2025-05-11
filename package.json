@@ -28,7 +28,9 @@
   "author": "ttobakkttobakk <uoon.dev@gmail.com> (ttobakkttobakk)",
   "license": "MIT",
   "homepage": "https://github.com/ttobakkttobakk/expo-pdf-toolkit#readme",
-  "dependencies": {},
+  "dependencies": {
+    "expo-modules-core": "^1.5.12"
+  },
   "devDependencies": {
     "@types/react": "~18.3.12",
     "expo-module-scripts": "^4.0.4",

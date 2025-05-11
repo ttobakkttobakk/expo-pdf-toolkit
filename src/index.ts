@@ -1,15 +1,27 @@
-// Reexport the native module. On web, it will be resolved to PDFToolkitModule.web.ts
-// and on native platforms to PDFToolkitModule.ts
+/**
+ * PDF 도구 모듈
+ * 네이티브 플랫폼에서는 PDFToolkitModule.ts로 연결되고
+ * 웹에서는 PDFToolkitModule.web.ts로 연결됩니다.
+ */
 
-// 1. 명시적 export - 자동완성을 위해 recommended
-import type { PDFToolkitModuleType } from "./PDFToolkit.types";
-import PDFToolkitModule from "./PDFToolkitModule";
+// 타입 정의 내보내기
+// 구현체 가져오기
+import { PDFToolkitModuleType } from "./PDFToolkit.types";
+import PDFToolkitImpl from "./PDFToolkitModule";
 
-// Export the native module as PDFToolkit for named import
-export const PDFToolkit: PDFToolkitModuleType = PDFToolkitModule;
-
-// 2. 기존 default export - 이전 코드 호환성 유지
-export default PDFToolkitModule;
-
-// 3. type exports
 export * from "./PDFToolkit.types";
+
+/**
+ * PDF Toolkit 모듈
+ * PDF 파일 관련 기능 제공
+ * @example
+ * import { PDFToolkit } from 'expo-pdf-toolkit';
+ * // 여러 페이지 이미지로 변환
+ * const images = await PDFToolkit.convertToImages(pdfPath, { scale: 1.0 });
+ * // 특정 페이지 썸네일 얻기
+ * const thumbnail = await PDFToolkit.getPageThumbnail(pdfPath, 0, { scale: 0.5 });
+ */
+export const PDFToolkit: PDFToolkitModuleType = PDFToolkitImpl;
+
+// 기존 방식 호환을 위한 default export
+export default PDFToolkitImpl;

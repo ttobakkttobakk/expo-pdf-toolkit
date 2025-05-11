@@ -1,9 +1,9 @@
 export type PDFToolkitModuleEvents = {
-  onProgress: (event: {
+  onProgress: {
     progress: number;
     page: number;
     total: number;
-  }) => void;
+  };
 };
 
 /**
@@ -32,13 +32,18 @@ export interface PDFToolkitModuleType {
    * @param eventName 이벤트 이름
    * @param listener 콜백 함수
    */
-  addListener(eventName: string, listener: (...args: any[]) => void): void;
+  addListener(
+    eventName: keyof PDFToolkitModuleEvents,
+    listener: (
+      event: PDFToolkitModuleEvents[keyof PDFToolkitModuleEvents]
+    ) => void
+  ): void;
 
   /**
    * 모든 이벤트 리스너 제거
    * @param eventName 이벤트 이름
    */
-  removeAllListeners(eventName: string): void;
+  removeAllListeners(eventName: keyof PDFToolkitModuleEvents): void;
 
   /**
    * PDF 파일의 모든 페이지를 이미지로 변환
